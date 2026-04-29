@@ -39,7 +39,43 @@ class GamePage extends StatelessWidget {
     return Container(
       padding: EdgeInsets.all(8.0),
       child: Column(
-        spacing: 5.0, children: [for (final guess in _game.guesses) Row(spacing: 5.0, children: [for (final letter in guess) Title(letter.char, letter.type)])]),
+        spacing: 5.0, 
+        children: [for (final guess in _game.guesses) 
+          Row(
+            spacing: 5.0,
+            children: [for (final letter in guess) Title(letter.char, letter.type)]
+          ),
+          GuessInput(onSubmitGuess: (text) {
+            print("Тест");
+          })
+        ]
+      ),
+    );
+  }
+}
+
+class GuessInput extends StatelessWidget {
+  final Function(String) onSubmitGuess;
+  final TextEditingController _textEditingController = TextEditingController();
+  GuessInput({super.key, required this.onSubmitGuess});
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      children: [
+        Expanded(
+          child: Padding(
+            padding: EdgeInsets.all(8.0),
+            child: TextField(
+              maxLength: 5, 
+              decoration: InputDecoration(labelText: "Enter your guess", border: OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(8.0)))),
+              onSubmitted: (input) {
+                print(_textEditingController.text);
+              },
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
